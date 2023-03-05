@@ -11,17 +11,17 @@ class ProductManagerTest {
     private ProductRepository repository = new ProductRepository();
     private ProductManager manager = new ProductManager( repository );
 
-    private Book book1 = new Book( 1, "Book1", 100, "Author1" );
-    private Book book2 = new Book( 2, "Book2", 100, "Author1" );
-    private Book book3 = new Book( 3, "Book3", 100, "Author2" );
-    private Book book4 = new Book( 4, "Book4", 100, "Author2" );
-    private Book book5 = new Book( 5, "Book5", 100, "Author3" );
+    private Book book1 = new Book( 1, "Book1", 100, "Author1" ); // поменяла описание на уникальное
+    private Book book2 = new Book( 2, "Book2", 100, "Author2" ); // поменяла описание на уникальное
+    private Book book3 = new Book( 3, "Book3", 100, "Author3" ); // поменяла описание на уникальное
+    private Book book4 = new Book( 4, "Book4", 100, "Author4" );
+    private Book book5 = new Book( 5, "Book5", 100, "Author5" );
 
     private Smartphone smartphone1 = new Smartphone( 1, "Smartphone1", 1000, "Producer1" );
     private Smartphone smartphone2 = new Smartphone( 2, "Smartphone2", 1000, "Producer2" );
-    private Smartphone smartphone3 = new Smartphone( 3, "Smartphone3", 1000, "Producer1" );
-    private Smartphone smartphone4 = new Smartphone( 4, "Smartphone4", 1000, "Producer2" );
-    private Smartphone smartphone5 = new Smartphone( 5, "Smartphone5", 1000, "Producer3" );
+    private Smartphone smartphone3 = new Smartphone( 3, "Smartphone3", 1000, "Producer3" );
+    private Smartphone smartphone4 = new Smartphone( 4, "Smartphone5", 1000, "Producer4" ); // поменяла описание на аналогичное у другого продукта
+    private Smartphone smartphone5 = new Smartphone( 5, "Smartphone5", 1000, "Producer4" ); // поменяла описание на аналогичное у другого продукта
 
     @BeforeEach
     void setUp() {
@@ -55,10 +55,30 @@ class ProductManagerTest {
         assertArrayEquals( expected, actual );
     }
 
+    // дописан тест : несколько продуктов с одинаковым названием (маркой телефона)
+
+    @Test
+    public void shouldFindSmartphoneByNameMoreThenOne() {
+        String nameToSearch = "Smartphone5";
+        Product[] expected = new Product[]{smartphone4, smartphone5};
+        Product[] actual = manager.searchBy( nameToSearch );
+        assertArrayEquals( expected, actual );
+    }
+
+    // дописан тест: не найдено ниодного продукта
+
+    @Test
+    public void shouldFindSmartphoneByNameZero() {
+        String nameToSearch = "Smartphone6";
+        Product[] expected = {};
+        Product[] actual = manager.searchBy( nameToSearch );
+        assertArrayEquals( expected, actual );
+    }
+
 
     //негативные тесты
     @Test
-    void searchByInvalidBookbeName() {
+    void searchByInvalidBookName() {
 
         Product[] expected = {};
         Product[] actual = manager.searchBy( "NoName" );
