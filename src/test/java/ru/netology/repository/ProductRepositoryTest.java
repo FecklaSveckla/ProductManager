@@ -5,6 +5,7 @@ import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
 import ru.netology.manager.ProductManager;
+import ru.netology.exception.NotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,6 +21,29 @@ class ProductRepositoryTest {
     private Book book5 = new Book( 5, "Book5", 100, "Author3" );
 
 
+
+// новые тесты NotFoundException. тест удаления RemoveId реализован в предыдущей работе ниже
+
+
+    @Test
+    public void removeByIdElementNotExistTest() {
+
+        assertThrows(NotFoundException.class, () -> repository.removeById(6));
+    }
+
+    @Test
+    public void shouldFinById() {
+        repository.save( book2 );
+        repository.findById( book2.getId() );
+
+        Product[] expected = {book2};
+        Product[] actual = repository.getItems();
+        assertArrayEquals( expected, actual );
+
+    }
+
+
+//тесты написанные для предыдущего задания
     @Test
     public void shouldSaveOneItem() {
         repository.save( book1 );
