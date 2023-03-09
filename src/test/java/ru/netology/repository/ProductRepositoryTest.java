@@ -21,14 +21,13 @@ class ProductRepositoryTest {
     private Book book5 = new Book( 5, "Book5", 100, "Author3" );
 
 
-
 // новые тесты NotFoundException. тест удаления RemoveId реализован в предыдущей работе ниже
 
 
     @Test
     public void removeByIdElementNotExistTest() {
 
-        assertThrows(NotFoundException.class, () -> repository.removeById(6));
+        assertThrows( NotFoundException.class, () -> repository.removeById( 6 ) );
     }
 
     @Test
@@ -43,7 +42,7 @@ class ProductRepositoryTest {
     }
 
 
-//тесты написанные для предыдущего задания
+    //тесты написанные для предыдущего задания
     @Test
     public void shouldSaveOneItem() {
         repository.save( book1 );
